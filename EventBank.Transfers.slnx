@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EventBank.Transfers.Api/EventBank.Transfers.Api.csproj" />
+    <Project Path="src/EventBank.Transfers.Application/EventBank.Transfers.Application.csproj" />
+    <Project Path="src/EventBank.Transfers.Domain/EventBank.Transfers.Domain.csproj" />
+    <Project Path="src/EventBank.Transfers.Infrastructure/EventBank.Transfers.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EventBank.Transfers.Architecture.Tests/EventBank.Transfers.Architecture.Tests.csproj" />
+    <Project Path="tests/EventBank.Transfers.Domain.Tests/EventBank.Transfers.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

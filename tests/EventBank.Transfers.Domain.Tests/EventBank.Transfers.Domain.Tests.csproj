@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\EventBank.Transfers.Domain\EventBank.Transfers.Domain.csproj" />
+  </ItemGroup>
+</Project>
