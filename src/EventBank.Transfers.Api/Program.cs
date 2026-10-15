@@ -19,12 +19,14 @@ builder.Services
     .AddMessageHandler<AccountDebitDeclined, AccountDebitDeclinedConsumer>()
     .AddMessageHandler<AccountCredited, AccountCreditedConsumer>()
     .AddMessageHandler<AccountCreditDeclined, AccountCreditDeclinedConsumer>()
-    .AddMessageHandler<AccountRefunded, AccountRefundedConsumer>();
+    .AddMessageHandler<AccountRefunded, AccountRefundedConsumer>()
+    .AddMessageHandler<CustomerApproved, CustomerApprovedConsumer>();
 
 var app = builder.Build();
 
 app.UseServiceDefaults();
 app.MapTransferEndpoints();
+app.MapPixEndpoints();
 app.MapOperationsEndpoints<TransfersDbContext>();
 
 await app.InitializeDatabase<TransfersDbContext>();

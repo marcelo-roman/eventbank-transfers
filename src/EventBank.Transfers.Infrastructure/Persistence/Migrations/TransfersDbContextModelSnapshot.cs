@@ -66,18 +66,109 @@ namespace EventBank.Transfers.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Holder")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
                         .HasColumnName("holder");
 
                     b.Property<bool>("IsOpen")
                         .HasColumnType("boolean")
                         .HasColumnName("is_open");
 
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)")
+                        .HasColumnName("number");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
                     b.HasKey("AccountId")
                         .HasName("pk_account_directory");
 
+                    b.HasIndex("OwnerId")
+                        .HasDatabaseName("ix_account_directory_owner_id");
+
                     b.ToTable("account_directory", (string)null);
+                });
+
+            modelBuilder.Entity("EventBank.Transfers.Infrastructure.Persistence.CustomerDirectoryEntry", b =>
+                {
+                    b.Property<Guid>("CustomerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("customer_id");
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("cpf");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("email");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
+                        .HasColumnName("full_name");
+
+                    b.HasKey("CustomerId")
+                        .HasName("pk_customer_directory");
+
+                    b.ToTable("customer_directory", (string)null);
+                });
+
+            modelBuilder.Entity("EventBank.Transfers.Infrastructure.Persistence.PixKeySummary", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("key");
+
+                    b.Property<Guid>("AccountId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("account_id");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("owner_id");
+
+                    b.Property<string>("OwnerName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
+                        .HasColumnName("owner_name");
+
+                    b.Property<DateTimeOffset>("RegisteredAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("registered_at");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("type");
+
+                    b.HasKey("Key")
+                        .HasName("pk_pix_keys");
+
+                    b.HasIndex("AccountId")
+                        .HasDatabaseName("ix_pix_keys_account_id");
+
+                    b.HasIndex("OwnerId")
+                        .HasDatabaseName("ix_pix_keys_owner_id");
+
+                    b.ToTable("pix_keys", (string)null);
                 });
 
             modelBuilder.Entity("EventBank.Transfers.Infrastructure.Persistence.TransferSummary", b =>
@@ -104,8 +195,8 @@ namespace EventBank.Transfers.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("DestinationHolder")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
                         .HasColumnName("destination_holder");
 
                     b.Property<string>("FailureReason")
@@ -123,8 +214,8 @@ namespace EventBank.Transfers.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("SourceHolder")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)")
                         .HasColumnName("source_holder");
 
                     b.Property<string>("Status")

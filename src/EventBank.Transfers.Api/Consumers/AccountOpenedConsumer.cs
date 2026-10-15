@@ -8,5 +8,5 @@ namespace EventBank.Transfers.Api.Consumers;
 public sealed class AccountOpenedConsumer(ICommandHandler<RegisterAccount, Unit> handler) : IMessageHandler<AccountOpened>
 {
     public Task Handle(AccountOpened message, CancellationToken cancellationToken) =>
-        handler.Handle(new RegisterAccount(message.AccountId, message.Holder, message.Currency), cancellationToken);
+        handler.Handle(new RegisterAccount(message.AccountId, message.OwnerId, message.Holder, message.Currency, message.Number), cancellationToken);
 }

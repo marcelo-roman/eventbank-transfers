@@ -6,7 +6,9 @@ public interface IAccountDirectory
 {
     Task<AccountReference?> Find(AccountId accountId, CancellationToken cancellationToken);
 
-    Task Register(AccountId accountId, string holder, string currency, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Guid>> AccountIdsOf(Guid ownerId, CancellationToken cancellationToken);
+
+    Task Register(AccountId accountId, Guid ownerId, string holder, string currency, string number, CancellationToken cancellationToken);
 
     Task MarkClosed(AccountId accountId, CancellationToken cancellationToken);
 }

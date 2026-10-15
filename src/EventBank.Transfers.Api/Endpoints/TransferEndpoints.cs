@@ -1,5 +1,6 @@
 using EventBank.BuildingBlocks.Application.Cqrs;
 using EventBank.BuildingBlocks.Application.Persistence;
+using EventBank.BuildingBlocks.Application.Security;
 using EventBank.BuildingBlocks.Web;
 using EventBank.Transfers.Application.Commands;
 using EventBank.Transfers.Application.Queries;
@@ -11,9 +12,9 @@ public static class TransferEndpoints
 {
     public static IEndpointRouteBuilder MapTransferEndpoints(this IEndpointRouteBuilder endpoints)
     {
-        var transfers = endpoints.MapGroup("/transfers").WithTags("Transfers");
+        var transfers = endpoints.MapGroup("/transfers").WithTags("Transfers").RequireAuthorization();
 
-        transfers.MapPost("/", Request);
+        transfers.MapPost("/", Request).RequireAuthorization(Roles.Customer);
         transfers.MapGet("/", List);
         transfers.MapGet("/{transferId:guid}", Get);
         transfers.MapGet("/{transferId:guid}/events", Events);
@@ -33,10 +34,9 @@ public static class TransferEndpoints
     }
 
     private static async Task<Ok<IReadOnlyList<TransferView>>> List(
-        Guid? accountId,
         IQueryHandler<ListTransfers, IReadOnlyList<TransferView>> handler,
         CancellationToken cancellationToken) =>
-        TypedResults.Ok(await handler.Handle(new ListTransfers(accountId), cancellationToken));
+        TypedResults.Ok(await handler.Handle(new ListTransfers(), cancellationToken));
 
     private static async Task<Results<Ok<TransferView>, NotFound>> Get(
         Guid transferId,

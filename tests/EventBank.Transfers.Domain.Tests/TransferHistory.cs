@@ -13,7 +13,9 @@ internal static class TransferHistory
     public static readonly TransferRequested Requested = new(PaymentId.Value, Source.Value, Destination.Value, 75m, "BRL");
     public static readonly TransferDebited Debited = new(PaymentId.Value, Destination.Value, 75m, "BRL");
 
-    public static AccountReference OpenAccount(AccountId id, string currency = "BRL") => new(id, Currency.From(currency), IsOpen: true);
+    public static readonly Guid Owner = Guid.Parse("0199b000-0000-7000-8000-0000000000c1");
+
+    public static AccountReference OpenAccount(AccountId id, string currency = "BRL") => new(id, Owner, Currency.From(currency), IsOpen: true);
 
     public static Transfer Given(params IDomainEvent[] history)
     {

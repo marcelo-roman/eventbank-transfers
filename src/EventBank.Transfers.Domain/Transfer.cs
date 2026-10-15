@@ -65,7 +65,7 @@ public sealed class Transfer : AggregateRoot<TransferId>
             return;
         }
 
-        Raise(new TransferCompleted(Id.Value));
+        Raise(new TransferCompleted(Id.Value, Source.Value, Destination.Value, Amount.Amount, Amount.Currency.Code));
     }
 
     public void RecordCreditDeclined(string reason)

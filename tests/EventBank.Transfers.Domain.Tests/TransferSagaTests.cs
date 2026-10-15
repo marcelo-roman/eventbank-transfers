@@ -23,7 +23,7 @@ public sealed class TransferSagaTests
 
         transfer.RecordCredit();
 
-        transfer.PendingEvents.ShouldBe([new TransferCompleted(PaymentId.Value)]);
+        transfer.PendingEvents.ShouldBe([new TransferCompleted(PaymentId.Value, Source.Value, Destination.Value, 75m, "BRL")]);
         transfer.Status.ShouldBe(TransferStatus.Completed);
     }
 

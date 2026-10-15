@@ -11,7 +11,12 @@ public sealed record TransferDebited(Guid TransferId, Guid DestinationAccountId,
 
 public sealed record TransferFailed(Guid TransferId, string Reason) : ITransferEvent;
 
-public sealed record TransferCompleted(Guid TransferId) : ITransferEvent;
+public sealed record TransferCompleted(
+    Guid TransferId,
+    Guid SourceAccountId,
+    Guid DestinationAccountId,
+    decimal Amount,
+    string Currency) : ITransferEvent;
 
 public sealed record TransferCreditDeclined(Guid TransferId, Guid SourceAccountId, string Reason) : ITransferEvent;
 

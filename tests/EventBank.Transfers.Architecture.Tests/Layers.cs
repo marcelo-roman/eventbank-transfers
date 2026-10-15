@@ -6,7 +6,7 @@ internal static class Layers
 {
     public const string Root = "EventBank.Transfers";
 
-    public const string OtherBoundedContext = "EventBank.Accounts";
+    public static readonly string[] OtherBoundedContexts = ["EventBank.Accounts", "EventBank.Customers", "EventBank.Cards", "EventBank.Notifications"];
 
     public static readonly Assembly Domain = typeof(Domain.Transfer).Assembly;
 

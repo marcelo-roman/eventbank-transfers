@@ -7,7 +7,13 @@ public sealed class RegisterAccountHandler(IAccountDirectory directory) : IComma
 {
     public async Task<Unit> Handle(RegisterAccount command, CancellationToken cancellationToken)
     {
-        await directory.Register(new AccountId(command.AccountId), command.Holder, command.Currency, cancellationToken);
+        await directory.Register(
+            new AccountId(command.AccountId),
+            command.OwnerId,
+            command.Holder,
+            command.Currency,
+            command.Number,
+            cancellationToken);
         return Unit.Value;
     }
 }

@@ -2,8 +2,8 @@ using EventBank.BuildingBlocks.Application.Cqrs;
 
 namespace EventBank.Transfers.Application.Queries;
 
-public sealed class GetTransferHandler(ITransferReadStore readStore) : IQueryHandler<GetTransfer, TransferView?>
+public sealed class GetTransferHandler(TransferAccess access) : IQueryHandler<GetTransfer, TransferView?>
 {
-    public Task<TransferView?> Handle(GetTransfer query, CancellationToken cancellationToken) =>
-        readStore.FindTransfer(query.TransferId, cancellationToken);
+    public async Task<TransferView?> Handle(GetTransfer query, CancellationToken cancellationToken) =>
+        await access.EnsureCanRead(query.TransferId, cancellationToken);
 }

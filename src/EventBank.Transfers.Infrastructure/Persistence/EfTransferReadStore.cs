@@ -7,12 +7,13 @@ public sealed class EfTransferReadStore(TransfersDbContext dbContext) : ITransfe
 {
     private const int PageSize = 100;
 
-    public async Task<IReadOnlyList<TransferView>> ListTransfers(Guid? accountId, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<TransferView>> ListTransfers(IReadOnlyCollection<Guid>? accountIds, CancellationToken cancellationToken)
     {
         var transfers = dbContext.TransferSummaries.AsNoTracking();
-        if (accountId is { } id)
+        if (accountIds is not null)
         {
-            transfers = transfers.Where(transfer => transfer.SourceAccountId == id || transfer.DestinationAccountId == id);
+            transfers = transfers.Where(transfer =>
+                accountIds.Contains(transfer.SourceAccountId) || accountIds.Contains(transfer.DestinationAccountId));
         }
 
         return await Views(transfers.OrderByDescending(transfer => transfer.RequestedAt).Take(PageSize))
